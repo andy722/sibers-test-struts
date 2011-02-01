@@ -1,0 +1,14 @@
+1. About
+	Project management application using:
+	 * Struts for easier servlet management
+	 * Hibernate for database connection
+	 * MySQL as database
+	 * log4j as logging facility
+
+2. Installation
+	This archive contains Eclipse project with all (at least, i hope so) necessary libraries.
+	Just open it in IDE, export to WAR and deploy in webapps directory. Also it's necessary to create database table structure.
+	By default, you should create database "Projects" and user "pm" with read/write access to it. For table creation, there is a script named schema.ddl
+
+3. Author
+	A. Belsky (andy.belsky@gmail.com, +7 913 748 7220)

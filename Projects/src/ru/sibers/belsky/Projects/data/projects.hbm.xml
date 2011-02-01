@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ru.sibers.belsky.Projects.data">
+
+	<class name="Project" table="projects">
+		<id name="id" type="integer">
+			<generator class="native"/>
+		</id>
+
+		<property name="companyFrom" column="executor" not-null="true"/>
+		<property name="companyTo" column="client" not-null="true"/>
+		<property name="projectName" column="name" not-null="true"/>
+
+		<many-to-one name="manager" class="Worker" column="manager" not-null="true" />
+
+		<set name="workers" table="project_workers" lazy="false">
+		   	<key>
+				<column name="project" not-null="true"/>
+    		</key>
+    		<many-to-many class="Worker">
+        		<column name="worker" not-null="false"/>
+    		</many-to-many>
+		</set>
+
+		<property name="comment" column="comment" not-null="false"/>
+	</class>
+
+	<class name="Worker" table="workers">
+		<id name="id" type="integer">
+			<generator class="native"/>
+		</id>
+
+		<property name="name" column="name" not-null="true"/>
+		<property name="email" column="email" not-null="true"/>
+	</class>
+
+</hibernate-mapping>

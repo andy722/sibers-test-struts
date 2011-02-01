@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+	<form-beans>
+		<form-bean name="projectDetailForm" type="ru.sibers.belsky.Projects.ProjectDetailForm"/>
+		<form-bean name="searchForm" type="ru.sibers.belsky.Projects.SearchForm"/>
+	</form-beans>
+
+	<global-forwards>
+		<!-- By default user is forwarded to a search page -->
+		<forward name="start" path="/search.jsp" />
+	</global-forwards>
+
+    <action-mappings>
+
+		<!-- Search and search results -->
+		<action
+			path="/search"
+			name="searchForm"
+			type="ru.sibers.belsky.Projects.SearchAction"
+			scope="session"
+		>
+			<!-- Perform search -->
+			<forward name="onSearch" path="/results.jsp"/>
+
+			<!-- Create new entry -->
+			<forward name="onCreate" path="/edit.do" redirect="true"/>
+
+			<!-- Else -->
+			<forward name="onDefault" path="/search.jsp" />
+		</action>
+
+		<!-- View of project in details -->
+		<action
+			path="/edit"
+			name="projectDetailForm"
+			type="ru.sibers.belsky.Projects.ProjectDetailAction"
+			input="/edit.jsp"
+			validate="false"
+		>
+			<!-- Save input -->
+			<forward name="onSave" path="/edit.jsp"/>
+
+			<!-- Delete currently opened project -->
+			<forward name="onDelete" path="/search.do" redirect="true"/>
+
+			<!-- Return to search page -->
+			<forward name="onBack" path="/search.do" redirect="true"/>
+
+			<!-- Else -->
+			<forward name="onDefault" path="/edit.jsp"/>
+		</action>
+
+    </action-mappings>
+
+    <message-resources parameter="MessageResources" />
+
+	<!-- Hibernate database connection -->
+    <plug-in className="ru.sibers.belsky.Projects.data.DataAccess" />
+</struts-config>
